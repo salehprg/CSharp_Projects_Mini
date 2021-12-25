@@ -1,0 +1,117 @@
+
+<div class="modal-header">
+  <h4 class="modal-title">{{header}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" perfectScrollbar [ngStyle]="{'max-height.px': height}">
+  <ngx-loading [show]="isLoading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+  <form [formGroup]="versionForm" class="editForm form-border">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header pb-2">
+            <h4 class="card-title" id="horz-layout-basic">اطلاعات ورژن جاری</h4>
+            <p class="mb-0">
+              از این قسمت می توانید آخرین ورژن فریورک دستگاه را آپلود نمایید.توجه فرمایید
+
+              <code>شماره ورژن</code>
+              و
+              <code> نام مستعار آن</code>
+              برای گزارش گیری دارای اهیمیت هستند.
+
+            </p>
+          </div>
+          <div class="card-content">
+            <div class="px-3">
+                <div class="form-body">
+                  <h4 class="form-section"><i class="ft-user"></i>اطلاعات ورژن</h4>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="nickName">نام مستعار </label>
+                    <div class="col-md-9">
+                      <input type="text" id="nickName" formControlName="nickname" class="form-control" name="header">
+                    </div>
+                    <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                      <mat-error *ngIf="isPanelHasError('nickname','required')">
+                        <strong>لطفا نام ورژن پنل را وارد کنید.</strong>
+                      </mat-error>
+                      <mat-error *ngIf="isPanelHasError('nickname','minlength')">
+                        <strong>حداقل طول نام ورژن پنل 4 کاراکتر است.</strong>
+                      </mat-error>
+                      <mat-error *ngIf="isPanelHasError('nickname','maxlength')">
+                        <strong>حداکثر طول نام ورژن پنل 100 کاراکتر است.</strong>
+                      </mat-error>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="min">کمینه ورژن </label>
+                    <div class="col-md-9">
+                      <input type="text" id="min" formControlName="minVersion" class="form-control" name="header">
+                    </div>
+                    <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                      <mat-error *ngIf="isPanelHasError('minVersion','required')">
+                        <strong>لطفا کمینه ورژن پنل را وارد کنید.</strong>
+                      </mat-error>
+                      <mat-error *ngIf="isPanelHasError('minVersion','min')">
+                        <strong>حداقل مقدار کمینه ورژن پنل 0 است.</strong>
+                      </mat-error>
+                      <mat-error *ngIf="isPanelHasError('minVersion','pattern')">
+                        <strong> مقدار کمینه ورژن پنل یک عدد است.</strong>
+                      </mat-error>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-3 label-control" for="max">بیشینه ورژن </label>
+                    <div class="col-md-9">
+                      <input type="text" id="max" formControlName="maxVersion" class="form-control" name="header">
+                    </div>
+                    <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                      <mat-error *ngIf="isPanelHasError('maxVersion','required')">
+                        <strong>لطفا بیشینه ورژن پنل را وارد کنید.</strong>
+                      </mat-error>
+                      <mat-error *ngIf="isPanelHasError('maxVersion','min')">
+                        <strong>حداقل مقدار بیشینه ورژن پنل 0 است.</strong>
+                      </mat-error>
+                      <mat-error *ngIf="isPanelHasError('maxVersion','pattern')">
+                        <strong> مقدار بیشینه ورژن پنل یک عدد است.</strong>
+                      </mat-error>
+                    </div>
+                  </div>
+
+                </div>
+                <h4 class="form-section"><i class="ft-file-text"></i> اطلاعات فایل</h4>
+                <div class="form-group row">
+                  <label class="col-md-3 label-control" >فایل ورژن </label>
+                  <div class="col-md-9">
+                    <div class="col-12">
+                      <div class="custom-dropzone" #dp ngx-dropzone [multiple]="false" [accept]="'*'" (change)="onSelect($event)">
+                        <ngx-dropzone-label>
+                          <div>
+                            <h2>کلیک کنید!</h2>
+                          </div>
+                        </ngx-dropzone-label>
+                        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                          <ngx-dropzone-label>{{ f.name.length>12? f.name.substr(0,10)+'...': f.name }} ({{ f.type }})</ngx-dropzone-label>
+                        </ngx-dropzone-preview>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <ngx-loading [show]="isLoading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger btn-raised ml-1" (click)="activeModal.close('Close click')">بستن</button>
+  <button type="button" class="btn btn-info btn-raised"
+          (click)="submit()"
+          [disabled]="versionForm.invalid">
+    ثبت ورژن
+    <span style="margin-left:10px;"><i class="ft-chevron-right"></i></span>
+  </button>
+</div>

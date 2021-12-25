@@ -1,0 +1,82 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{header}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" perfectScrollbar [ngStyle]="{'max-height.px': height}">
+  <ngx-loading [show]="isLoading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+  <form [formGroup]="creditFrom" class="editForm form-border">
+    <h4 class="head text-center">لطفا میزان اعتبار درخواستی را وارد کنید.</h4>
+    <br/>
+    <div class='row'>
+      <div class='col-12'>
+        <div class="form-group">
+          <label class="form-control-label" for="credit">میزان اعتبار فعلی</label>
+          <div class="input-group" style="direction: ltr">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="credit-addon">تومان</span>
+            </div>
+          <input class="form-control input-md" style="cursor: not-allowed; direction: rtl" [readOnly]="true" autocomplete="off" formControlName="credit"
+                 aria-label="credit" aria-describedby="credit-addon"
+                 id="credit" type="text">
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="creditAdd">افزایش اعتبار</label>
+          <div class="input-group" style="direction: ltr">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="creditAdd-addon">تومان</span>
+            </div>
+          <input class="form-control input-md" autocomplete="off" formControlName="creditAdd"
+                 aria-label="creditAdd" aria-describedby="creditAdd-addon"
+                 id="creditAdd" type="text">
+          </div>
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+            <mat-error *ngIf="isCreditHasError('creditAdd','required')">
+              <strong>لطفا اعتبار را وارد کنید.</strong>
+            </mat-error>
+            <mat-error *ngIf="isCreditHasError('creditAdd','pattern')">
+              <strong>اعتبار وارد شده صحیح نمی باشد.</strong>
+            </mat-error>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="discount">تخفیف</label>
+          <div class="input-group" style="direction: ltr">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="discount-addon">٪ </span>
+            </div>
+          <input class="form-control input-md" autocomplete="off" formControlName="discount"
+                 aria-label="discount" aria-describedby="discount-addon"
+                 id="discount" type="text">
+          </div>
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+            <mat-error *ngIf="isCreditHasError('discount','required')">
+              <strong>لطفا اعتبار را وارد کنید.</strong>
+            </mat-error>
+            <mat-error *ngIf="isCreditHasError('discount','min')">
+              <strong>حداقل درصد تخیف صفر می باشد.</strong>
+            </mat-error>
+            <mat-error *ngIf="isCreditHasError('discount','max')">
+              <strong>حداکثر درصد تخفیف 100 می باشد.</strong>
+            </mat-error>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger btn-raised ml-1" (click)="activeModal.close('Close click')">بستن</button>
+  <button type="button" class="btn btn-primary btn-raised"
+          (click)="submit()"
+          [disabled]="creditFrom.invalid">
+    ثبت
+    <span style="margin-left:10px;"><i class="ft-chevron-right"></i></span>
+  </button>
+</div>

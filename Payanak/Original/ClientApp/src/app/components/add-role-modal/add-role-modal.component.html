@@ -1,0 +1,92 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{header}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body"  perfectScrollbar [ngStyle]="{'max-height.px': height}">
+
+    <form [formGroup]="roleForm" class="editForm form-border">
+      <h4 class="head text-center">لطفا اطلاعات نقش را وارد نمایید.</h4>
+      <br/>
+      <div class='row'>
+
+        <div class='col-12'>
+          <div class="form-group">
+            <label class="form-control-label" for="title">عنوان</label>
+            <input [readOnly]="!role.canEdit" class="form-control input-md" autocomplete="off" formControlName="title"
+                   id="title" type="text">
+            <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+              <mat-error *ngIf="isTemplateHasError('title','required')">
+                <strong>لطفا عنوان را وارد کنید.</strong>
+              </mat-error>
+              <mat-error *ngIf="isTemplateHasError('title','minlength')">
+                <strong>حداقل طول عنوان 2 کاراکتر است.</strong>
+              </mat-error>
+              <mat-error *ngIf="isTemplateHasError('title','maxlength')">
+                <strong>حداکثر طول عنوان 100 کاراکتر است.</strong>
+              </mat-error>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-control-label" for="name">اسم</label>
+            <input [readOnly]="!role.canEdit" class="form-control input-md" autocomplete="off" formControlName="name" id="name"
+                      type="text">
+            <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+              <mat-error *ngIf="isTemplateHasError('name','required')">
+                <strong>لطفا اسم را وارد کنید.</strong>
+              </mat-error>
+              <mat-error *ngIf="isTemplateHasError('name','minlength')">
+                <strong>حداقل طول اسم 2 کاراکتر است.</strong>
+              </mat-error>
+              <mat-error *ngIf="isTemplateHasError('name','maxlength')">
+                <strong>حداکثر طول اسم 100 کاراکتر است.</strong>
+              </mat-error>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  <h5>دسترسی ها</h5>
+  <div class="row" *ngFor="let itm of parentPermissions; let i = index">
+
+    <div class="col-12">
+      <hr>
+      <div class="mt-1">
+        <div class="custom-control custom-checkbox mb-2 mr-sm-3 mb-sm-0">
+          <input [disabled]="!role.canEdit" type="checkbox" [(ngModel)]="checked[getIndex(itm)]" class="custom-control-input"
+                 (change)="parentCliked(itm,$event)" [id]="'parent'+itm.id">
+          <label class="custom-control-label" [for]="'parent'+itm.id">{{itm.title}}</label>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="row">
+        <div class="col" *ngFor="let child of getChildPermissions(itm.id)">
+          <div class="mt-1">
+            <div class="custom-control custom-checkbox mb-2 mr-sm-4 mb-sm-0"
+            >
+              <input [disabled]="!role.canEdit" type="checkbox" [(ngModel)]="checked[getIndex(child)]" class="custom-control-input"
+                     (change)="childCliked(child,$event)" [id]="'child_'+child.id">
+              <label class="custom-control-label" [for]="'child_'+child.id">{{child.title}}</label>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger btn-raised ml-1" (click)="activeModal.close('Close click')">
+    <i class="ft-x"></i>بستن
+  </button>
+  <button type="button" class="btn btn-primary btn-raised"
+          (click)="submit()"
+          [disabled]="roleForm.invalid || !role.canEdit"
+          >
+    ثبت نقش
+    <span style="margin-left:10px;"><i class="ft-chevron-right"></i></span>
+  </button>
+</div>

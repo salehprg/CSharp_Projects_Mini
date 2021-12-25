@@ -1,0 +1,5 @@
+@import "../../../assets/sass/scss/variables";
+.primary-btn{
+  background-color: map_get($map: $theme-colors, $key: primary);
+  color: #fff;
+}

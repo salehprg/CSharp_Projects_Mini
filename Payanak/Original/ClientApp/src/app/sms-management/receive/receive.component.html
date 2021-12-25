@@ -1,0 +1,65 @@
+
+<div class="row">
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">لیست پیام های دریافتی</h3>
+        <h6 class="card-subtitle text-muted">لیست پیام هایی که شما دریافت کرده اید</h6>
+      </div>
+      <div class="card-content">
+        <div class="card-img">
+          <img class="card-img-top img-fluid height-150" src="assets/img/photos/18.jpg" alt="Card image cap">
+          <h4 class="card-title"></h4>
+        </div>
+        <div class="card-body" style="padding: 0">
+          <table class="table table-striped text-center" style="margin: 0">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>متن</th>
+              <th>فرستنده</th>
+              <th>کد دریافت</th>
+              <th>تاریخ دریافت</th>
+              <th>شماره دریافتی</th>
+              <th>تعداد پیام</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let itm of sms;let i=index">
+              <th scope="row">{{i + 1 + ((pageNumber -1)*pageSize) | persianNumber}}</th>
+              <td [matTooltip]="itm.body" matTooltipPosition="above">{{getTrimmedString(getCorrectString(itm.body))}}</td>
+              <td>{{getCorrectString(itm.sender)| persianNumber}}</td>
+              <td>{{getCorrectString(itm.msgId)| persianNumber}}</td>
+              <td>{{itm.sentDate | persianDate}}</td>
+              <td>{{getCorrectString(itm.receiver)| persianNumber}}</td>
+              <td>{{itm.count| persianNumber}}</td>
+            </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+      <div class="card-footer" style="direction: ltr">
+        <div class="row">
+          <div >
+            <ngb-pagination [collectionSize]="length"
+                            [pageSize]="pageSize"
+                            [(page)]="pageNumber"
+                            [maxSize]="5"
+                            (pageChange)="loadData()"
+                            [boundaryLinks]="true"></ngb-pagination>
+          </div>
+          <div style="direction: rtl;font-size: .8rem;flex: 1;text-align: end;margin: 10px;">
+            <span> {{getStart()| persianNumber}} </span>
+            از
+            <span>
+          {{ceil(length)| persianNumber}}
+              ردیف
+        </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

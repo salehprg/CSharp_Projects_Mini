@@ -1,0 +1,23 @@
+<div class="col-xl-12" style="direction: rtl">
+  <div class="col-xl-12">
+    <div class="rn-modal3__container">
+      <h1 mat-dialog-title style="font-family: SiteFont,sans-serif;text-align: right">{{title}} </h1>
+      <mat-dialog-content>
+        <div class="example-full-width">
+          <label style="text-align: right">{{body}}</label>
+
+        </div>
+        <mat-form-field *ngIf="data.hasValue" class="example-full-width">
+          <input matInput [(ngModel)]="data.value" type="text" placeholder="نام" required>
+          <mat-hint align="start">
+            <strong>نام را وارد نمایید.</strong>
+          </mat-hint>
+        </mat-form-field>
+      </mat-dialog-content>
+      <mat-dialog-actions style="direction: ltr">
+        <button mat-raised-button color="warn" mat-dialog-close>لغو</button>
+        <button mat-raised-button class="primary-btn" [mat-dialog-close]="data">تایید</button>
+      </mat-dialog-actions>
+    </div>
+  </div>
+</div>

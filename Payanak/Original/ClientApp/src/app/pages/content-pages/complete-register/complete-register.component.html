@@ -1,0 +1,385 @@
+<!--Registration Page Starts-->
+<section id="regestration" *ngIf="!isSucceeded">
+  <div class="container-fluid">
+    <div class="row full-height-vh m-0">
+      <div class="col-12 d-flex align-items-center justify-content-center">
+        <div class="card" style="width: 90%">
+          <div class="card-content">
+            <div class="card-body register-img">
+              <div class="row m-0">
+                <div class="col-lg-12 col-md-12 bg-white" perfectScrollbar="" style="max-height: 800px">
+
+                  <aw-wizard #wizard navBarLayout="large-empty-symbols">
+                    <aw-wizard-step [stepTitle]="'اطلاعات کاربری'"
+                                    (stepExit)="AccountInfoExit()"
+                                    [navigationSymbol]="{symbol: '&#xf007;', fontFamily: 'FontAwesome'}">
+
+                      <form [formGroup]="accountInfoForm" class="editForm form-border">
+                        <h4 class="head text-center">لطفا اطلاعات کاربری را وارد نمایید.</h4>
+                        <br/>
+                        <div class='row'>
+
+                          <div class="col-12 text-center">
+                            <a class="btn btn-social-icon btn-round mr-2 mb-2 btn-reddit fileContainer"
+                               style="margin-top: -35px;margin-left: -35px;"><span class="fa fa-image"></span>
+                              <input type="file" accept="image/*" (change)="imageSelected($event)"/>
+                            </a>
+                            <img [src]="user.accountInfo.picture | toServerPath"
+                                 class="rounded-circle img-border gradient-summer width-100" alt="Card image">
+                            <p>تصویر کاربری</p>
+                          </div>
+                          <div class='col-12'>
+                            <div class="form-group">
+                              <label class="form-control-label" for="username">نام کاربری</label>
+                              <input class="form-control input-md" autocomplete="off" formControlName="username"
+                                     id="username" type="text">
+                              <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                                <mat-error *ngIf="isAccountInfoHasError('username','required')">
+                                  <strong>لطفا نام کاربری را وارد کنید.</strong>
+                                </mat-error>
+                                <mat-error *ngIf="isAccountInfoHasError('username','minlength')">
+                                  <strong>حداقل طول نام کاربری 2 کاراکتر است.</strong>
+                                </mat-error>
+                                <mat-error *ngIf="isAccountInfoHasError('username','maxlength')">
+                                  <strong>حداکثر طول نام کاربری 100 کاراکتر است.</strong>
+                                </mat-error>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class='col-12 col-sm-6'>
+                                <div class="form-group">
+                                  <label class="form-control-label" for="password">رمز عبور</label>
+                                  <input class="form-control input-md" autocomplete="off" formControlName="password"
+                                         id="password" type="text">
+                                  <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                                    <mat-error *ngIf="isAccountInfoHasError('password','required')">
+                                      <strong>لطفا رمز عبور را وارد کنید.</strong>
+                                    </mat-error>
+                                    <mat-error *ngIf="isAccountInfoHasError('password','minlength')">
+                                      <strong>حداقل طول رمز عبور 2 کاراکتر است.</strong>
+                                    </mat-error>
+                                    <mat-error *ngIf="isAccountInfoHasError('password','maxlength')">
+                                      <strong>حداکثر طول رمز عبور 100 کاراکتر است.</strong>
+                                    </mat-error>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class='col-12 col-sm-6'>
+                                <div class="form-group">
+                                  <label class="form-control-label" for="confirmPass">تکرار رمز عبور</label>
+                                  <input class="form-control input-md" autocomplete="off" formControlName="confirmPass"
+                                         id="confirmPass" type="text">
+                                  <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                                    <mat-error *ngIf="isAccountInfoHasError('confirmPass','required')">
+                                      <strong>لطفا تکرار رمز عبور را وارد کنید.</strong>
+                                    </mat-error>
+                                    <mat-error *ngIf="isAccountInfoHasError('confirmPass','notSame')">
+                                      <strong>تکرار رمز عبور تحصیح نمی باشد.</strong>
+                                    </mat-error>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="form-control-label" for="email">ایمیل</label>
+                              <input class="form-control input-md" autocomplete="off" formControlName="email" id="email"
+                                     type="text">
+                              <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                                <mat-error *ngIf="isAccountInfoHasError('email','email')">
+                                  <strong>ایمیل وارد شده صحیح نمی باشد.</strong>
+                                </mat-error>
+
+                                <mat-error *ngIf="isAccountInfoHasError('email','maxlength')">
+                                  <strong>حداکثر طول ایمیل 200 کاراکتر است.</strong>
+                                </mat-error>
+                              </div>
+                            </div>
+                            <hr>
+
+                            <div class="row">
+                              <div class='col-12 col-sm-6'>
+                                <div class="form-group">
+                                  <label class="form-control-label" for="mobile">تلفن همراه</label>
+                                  <input class="form-control input-md" autocomplete="off" formControlName="mobile"
+                                         id="mobile" type="text">
+                                  <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                                    <mat-error *ngIf="isAccountInfoHasError('mobile','required')">
+                                      <strong>لطفا تلفن همراه را وارد کنید.</strong>
+                                    </mat-error>
+                                    <mat-error *ngIf="isAccountInfoHasError('mobile','minlength')">
+                                      <strong>حداقل طول تلفن همراه 7 کاراکتر است.</strong>
+                                    </mat-error>
+                                    <mat-error *ngIf="isAccountInfoHasError('mobile','maxlength')">
+                                      <strong>حداکثر طول تلفن همراه 15 کاراکتر است.</strong>
+                                    </mat-error>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class='col-12 col-sm-6'>
+                                <div class="form-group">
+                                  <label class="form-control-label" for="homePhone">تلفن محل سکونت</label>
+                                  <input class="form-control input-md" autocomplete="off" formControlName="homePhone"
+                                         id="homePhone" type="text">
+                                  <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                                    <mat-error *ngIf="isAccountInfoHasError('homePhone','minlength')">
+                                      <strong>حداقل طول تلفن محل سکونت 7 کاراکتر است.</strong>
+                                    </mat-error>
+                                    <mat-error *ngIf="isAccountInfoHasError('homePhone','maxlength')">
+                                      <strong>حداکثر طول تلفن محل سکونت 15 کاراکتر است.</strong>
+                                    </mat-error>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class='col-12 col-sm-6'>
+                                <div class="form-group">
+                                  <label class="form-control-label" for="businessPhone">تلفن محل کار</label>
+                                  <input class="form-control input-md" autocomplete="off"
+                                         formControlName="businessPhone" id="businessPhone" type="text">
+                                  <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                                    <mat-error *ngIf="isAccountInfoHasError('homePhone','minlength')">
+                                      <strong>حداقل طول تلفن محل کار 7 کاراکتر است.</strong>
+                                    </mat-error>
+                                    <mat-error *ngIf="isAccountInfoHasError('homePhone','maxlength')">
+                                      <strong>حداکثر طول تلفن محل کار 15 کاراکتر است.</strong>
+                                    </mat-error>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <hr>
+
+                            <div class="form-group text-center">
+                              <button type="button" class="btn btn-info btn-raised"
+                                      [disabled]="accountInfoForm.invalid" awNextStep>
+                                مرحله بعد
+                                <span style="margin-left:10px;">
+                                              <i class="ft-chevron-right"></i>
+                                          </span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </aw-wizard-step>
+                    <aw-wizard-step [stepTitle]="'اطلاعات شخصی'"
+                                    (stepExit)="PersonalInfoExit()"
+                                    [navigationSymbol]="{ symbol: '&#xf183;', fontFamily: 'FontAwesome' }">
+                      <form [formGroup]="personalInfoForm" class="editForm form-border">
+                        <h4 class="head text-center">لطفا اطلاعات شخصی را وارد نمایید.</h4>
+                        <br/>
+                        <div class='row'>
+                          <div class='col-12'>
+
+                            <div class="row">
+                              <div class='col-12 col-sm-6'>
+                                <div class="form-group">
+                                  <label class="form-control-label" for="fname">نام</label>
+                                  <input class="form-control input-md" autocomplete="off" formControlName="fname"
+                                         id="fname" type="text">
+                                  <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                                    <mat-error *ngIf="isPersonalInfoHasError('fname','required')">
+                                      <strong>لطفا نام را وارد کنید.</strong>
+                                    </mat-error>
+                                    <mat-error *ngIf="isPersonalInfoHasError('fname','minlength')">
+                                      <strong>حداقل طول نام 2 کاراکتر است.</strong>
+                                    </mat-error>
+                                    <mat-error *ngIf="isPersonalInfoHasError('fname','maxlength')">
+                                      <strong>حداکثر طول نام 100 کاراکتر است.</strong>
+                                    </mat-error>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class='col-12 col-sm-6'>
+                                <div class="form-group">
+                                  <label class="form-control-label" for="lname">نام خانوادگی</label>
+                                  <input class="form-control input-md" autocomplete="off" formControlName="lname"
+                                         id="lname" type="text">
+                                  <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                                    <mat-error *ngIf="isPersonalInfoHasError('lname','required')">
+                                      <strong>لطفا نام خانوادگی را وارد کنید.</strong>
+                                    </mat-error>
+                                    <mat-error *ngIf="isPersonalInfoHasError('lname','minlength')">
+                                      <strong>حداقل طول نام خانوادگی 2 کاراکتر است.</strong>
+                                    </mat-error>
+                                    <mat-error *ngIf="isPersonalInfoHasError('lname','maxlength')">
+                                      <strong>حداکثر طول نام خانوادگی 100 کاراکتر است.</strong>
+                                    </mat-error>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="form-control-label" for="nickName">نام مستعار</label>
+                              <input class="form-control input-md" autocomplete="off" formControlName="nickName"
+                                     id="nickName" type="text">
+                              <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                                <mat-error *ngIf="isPersonalInfoHasError('nickName','minlength')">
+                                  <strong>حداقل طول نام مستعار 2 کاراکتر است.</strong>
+                                </mat-error>
+                                <mat-error *ngIf="isPersonalInfoHasError('nickName','maxlength')">
+                                  <strong>حداکثر طول نام مستعار 100 کاراکتر است.</strong>
+                                </mat-error>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="form-control-label" for="gender">جنسیت</label>
+                              <select formControlName="gender" [value]="0" id="gender" name="gender"
+                                      class="form-control">
+                                <option value="0" selected>نامشخص</option>
+                                <option value="1">مرد</option>
+                                <option value="2">زن</option>
+
+                              </select>
+                              <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="form-control-label" for="birthday">تاریخ تولد</label>
+                              <div class="input-group">
+
+                                <div class="input-group-prepend">
+                                <span class="input-group-text">
+<!--                                  <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>-->
+                                  <i class="fa fa-calendar" (click)="picker.open()"></i>
+                                </span>
+                                </div>
+                                <input class="form-control input-md" autocomplete="off" formControlName="birthday"
+                                       [matDatepicker]="picker"
+                                       id="birthday"
+                                       type="text">
+                              </div>
+                              <mat-datepicker #picker></mat-datepicker>
+                              <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="form-control-label" for="nationalCode">کد ملی</label>
+                              <input class="form-control input-md" autocomplete="off" formControlName="nationalCode"
+                                     id="nationalCode" type="text">
+                              <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                                <mat-error *ngIf="isPersonalInfoHasError('nationalCode','minlength')">
+                                  <strong>حداقل طول کد ملی 10 کاراکتر است.</strong>
+                                </mat-error>
+                                <mat-error *ngIf="isPersonalInfoHasError('nationalCode','maxlength')">
+                                  <strong>حداکثر طول کد ملی 10 کاراکتر است.</strong>
+                                </mat-error>
+                              </div>
+                            </div>
+                            <hr>
+                            <div class="form-group text-center">
+                              <button type="button" class="btn btn-info btn-raised"
+                                      [disabled]="personalInfoForm.invalid" awNextStep>
+                                مرحله بعد
+                                <span style="margin-left:10px;">
+                                              <i class="ft-chevron-right"></i>
+                                          </span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </aw-wizard-step>
+                    <aw-wizard-step [stepTitle]="'اطلاعات افزودنی'"
+                                    (stepExit)="AdditionalInfoExit()"
+                                    [navigationSymbol]="{ symbol: '&#xf02c;', fontFamily: 'FontAwesome' }">
+                      <form [formGroup]="additionalInfoForm" class="editForm form-border">
+                        <h4 class="head text-center">لطفا اطلاعات افزودنی را وارد نمایید.</h4>
+                        <br/>
+                        <div class='row'>
+                          <div class='col-12'>
+                            <div class="form-group">
+                              <label class="form-control-label" for="instagram">اینستاگرام</label>
+                              <input class="form-control input-md" autocomplete="off" formControlName="instagram"
+                                     id="instagram" type="text">
+                              <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                                <mat-error *ngIf="isAdditionalInfoHasError('instagram','notInstagram')">
+                                  <strong>لطفا لینک صحیح را وارد کنید(مثال:
+                                    'https://www.instagram.com/example/').</strong>
+                                </mat-error>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="form-control-label" for="telegram">تلگرام</label>
+                              <input class="form-control input-md" autocomplete="off" formControlName="telegram"
+                                     id="telegram" type="text">
+                              <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                                <mat-error *ngIf="isAdditionalInfoHasError('telegram','notTelegram')">
+                                  <strong>لطفا لینک صحیح را وارد کنید(مثال: 'https://t.me/example/').</strong>
+                                </mat-error>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="form-control-label" for="specialDay">تاریخ خاص</label>
+                              <div class="input-group">
+
+                                <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fa fa-calendar" (click)="picker1.open()"></i>
+                                </span>
+                                </div>
+                                <input class="form-control input-md" autocomplete="off" formControlName="specialDay"
+                                       [matDatepicker]="picker1"
+                                       id="specialDay"
+                                       type="text">
+                              </div>
+                              <mat-datepicker #picker1></mat-datepicker>
+                              <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                              </div>
+                            </div>
+                            <hr>
+                            <div class="form-group text-center">
+                              <button type="button" class="btn btn-info btn-raised"
+                                      [disabled]="additionalInfoForm.invalid" awNextStep>
+                                مرحله بعد
+                                <span style="margin-left:10px;">
+                                              <i class="ft-chevron-right"></i>
+                                          </span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    </aw-wizard-step>
+                    <aw-wizard-step [stepTitle]="'آدرس'"
+                                    [navigationSymbol]="{ symbol: '&#xf124;', fontFamily: 'FontAwesome' }">
+                      <form #addressForm="ngForm" class="editForm">
+                        <h4 class="head text-center">کجا زندگی میکنید؟</h4>
+                        <br/>
+                        <div class="row">
+                          <div class="col-12" style="height: 300px">
+                            <app-map (addressChanged)="addressChanged($event)" lon="59.55114483833312"
+                                     lat="36.31581674404411" [zoom]="11">
+                              <app-layer>
+
+                              </app-layer>
+                            </app-map>
+
+                          </div>
+                          <div class="col-12">
+                            <span> {{address}} </span>
+                          </div>
+                        </div>
+                        <hr>
+
+                        <div class="form-group text-center">
+                          <button type="button" (click)="sendData()" class="btn btn-info btn-raised" awCompletedStep>
+                            ثبت نام
+                            <span style="margin-left:10px;">
+                                              <i class="ft-chevron-right"></i>
+                                          </span>
+                          </button>
+                        </div>
+                      </form>
+
+                    </aw-wizard-step>
+                  </aw-wizard>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Registration Page Ends-->

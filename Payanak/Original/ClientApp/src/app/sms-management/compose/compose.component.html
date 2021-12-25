@@ -1,0 +1,172 @@
+<div class="row">
+
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header pb-2">
+        <h4 class="card-title" id="horz-layout-basic">ارسال پیام</h4>
+        <p class="mb-0">
+          از این قسمت پیام های مورد نظر خود را ایجاد کرده.آن ها را برای
+
+          <code> شماره های مشخص</code>
+          و یا
+          <code> گروه های انتخابی</code>
+          خود ارسال نمایید.
+          توجه کنید قبل از ارسال پیام
+          <code>موجودی حساب </code>
+          شما به میزان کافی باشد.
+        </p>
+      </div>
+      <div class="card-content">
+        <div class="px-3">
+          <form class="form form-horizontal">
+            <div class="form-body">
+              <h4 class="form-section"><i class="ft-user"></i>اطلاعات پیام</h4>
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="header">عنوان ارسال (انتخابی) </label>
+                <div class="col-md-9">
+                  <input type="text" id="header" [(ngModel)]="header" class="form-control" name="header">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="sendNumber">شماره ارسالی: </label>
+                <div class="col-md-9">
+                  <select id="sendNumber" [(ngModel)]="sendNumber" name="interested" class="form-control">
+                    <option *ngFor="let itm of numbers" [value]="itm.id" selected="" >
+                      {{itm.number}} - {{(itm.type === 0 ? 'خدماتی' : 'تبلیغاتی')}}
+                    </option>
+
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="groupOrNumber">لیست شماره/گروه: </label>
+                <div class="col-md-9">
+                  <select id="groupOrNumber" [(ngModel)]="gOrN" #groupOrNumber name="groupOrNumber" class="form-control">
+                    <option value="0" selected="">ارسال به لیست شماره</option>
+                    <option value="1">ارسال به گروه</option>
+                  </select>
+                </div>
+              </div>
+
+              <div *ngIf="groupOrNumber.value==1" class="form-group row">
+                <label class="col-md-3 label-control" for="groups">گروه انتخابی: </label>
+                <div class="col-md-9">
+                  <tag-input [(ngModel)]="groupIds"
+                             id="groups"
+                             identifyBy="id"
+                             displayBy="title"
+                             [onlyFromAutocomplete]="true"
+                             [ngModelOptions]="{standalone: true}">
+                    <tag-input-dropdown [showDropdownIfEmpty]="true"
+                                        [focusFirstElement]="true"
+                                        [displayBy]="'title'"
+                                        [identifyBy]="'id'"
+                                        [autocompleteItems]="groups">
+                      <ng-template let-item="item" let-index="index">
+                        <img class="rounded-circle img-border gradient-summer" [src]="item.picture | toServerPath" width="32" height="32">
+                          {{item.title}}
+                      </ng-template>
+                    </tag-input-dropdown>
+                  </tag-input>
+                </div>
+              </div>
+              <div *ngIf="groupOrNumber.value==0"  class="form-group row">
+                <label class="col-md-3 label-control" for="sendToList">لیست شماره ها: </label>
+                <div class="col-md-9">
+                  <tag-input
+                    name="sendToList"
+                    id="sendToList"
+                    [errorMessages]="errorMessages"
+                    [validators]="validators"
+                    [(ngModel)]="sendTo"
+                    [modelAsStrings]="true"
+                    >
+                  </tag-input>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 label-control" for="templateOrBody">متن/پیش نویس: </label>
+                <div class="col-md-9">
+                  <select id="templateOrBody" [(ngModel)]="tOrB" #templateOrBody name="templateOrBody" class="form-control">
+                    <option value="0" selected="">متن</option>
+                    <option value="1">پیش نویس</option>
+                  </select>
+                </div>
+              </div>
+              <div *ngIf="templateOrBody.value==1"class="form-group row">
+                <label class="col-md-3 label-control" for="templates">پیش نویس انتخابی: </label>
+                <div class="col-md-9">
+                  <tag-input [(ngModel)]="templateIds"
+                             id="templates"
+                             identifyBy="id"
+                             displayBy="title"
+                             maxItems="1"
+                             [onlyFromAutocomplete]="true"
+                             [ngModelOptions]="{standalone: true}">
+                    <tag-input-dropdown [showDropdownIfEmpty]="true"
+                                        [focusFirstElement]="true"
+                                        [displayBy]="'title'"
+                                        [identifyBy]="'id'"
+                                        [autocompleteItems]="templates">
+                      <ng-template let-item="item" let-index="index">
+                        {{item.title}}
+                      </ng-template>
+                    </tag-input-dropdown>
+                  </tag-input>
+                </div>
+              </div>
+              <div *ngIf="templateOrBody.value==0" class="form-group row">
+                <label class="col-md-3 label-control" for="body">متن پیام: </label>
+                <div class="col-md-9">
+                  <textarea id="body" [(ngModel)]="body" rows="5" class="form-control" name="body"></textarea>
+                </div>
+              </div>
+            </div>
+            <h4 class="form-section"><i class="ft-file-text"></i> اطلاعات ارسال</h4>
+            <div class="form-group row">
+              <label class="col-md-3 label-control" for="header">تعداد شماره ها </label>
+              <div class="col-md-9">
+                <label type="text" class="form-control" name="header">
+                  {{sendTo.length}}
+                </label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 label-control" for="header">نوع پیام </label>
+              <div class="col-md-9">
+                <label type="text" class="form-control" name="header">
+                  {{getBodyType()}}
+                </label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 label-control" for="header">طول پیام </label>
+              <div class="col-md-9">
+                <label type="text" class="form-control" name="header">
+                  {{getBodyLength()}}
+                </label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 label-control" for="header">تعداد پیام </label>
+              <div class="col-md-9">
+                <label type="text" class="form-control" name="header">
+                  {{calculateSMSLength()}}
+                </label>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn btn-raised btn-warning mr-1">
+                <i class="ft-x"></i> لغو
+              </button>
+              <button type="button" (click)="ComposeSMS()" class="btn btn-raised btn-primary">
+                <i class="fa fa-check-square-o"></i> ارسال
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <ngx-loading [show]="loading || partLoading()" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+  </div>
+</div>

@@ -1,0 +1,121 @@
+
+<div class="modal-header">
+  <h4 class="modal-title">{{header}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" perfectScrollbar [ngStyle]="{'max-height.px': height}">
+  <ngx-loading [show]="isContactsLoaded" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+  <form [formGroup]="panelForm" class="editForm form-border">
+    <h4 class="head text-center">لطفا اطلاعات پنل را وارد نمایید.</h4>
+    <br/>
+    <div class='row'>
+      <div class='col-12'>
+        <div class="form-group">
+          <label class="form-control-label" for="serial">سریال</label>
+          <div class="input-group " style="direction: ltr">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="serial-addon">HS.P-</span>
+            </div>
+            <input class="form-control input-md"  [readonly]="isEdit" autocomplete="off" formControlName="serial"
+                   aria-label="serial" aria-describedby="serial-addon"
+                   id="serial" type="text">
+          </div>
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+            <mat-error *ngIf="isPanelHasError('serial','required')">
+              <strong>لطفا سریال پنل را وارد کنید.</strong>
+            </mat-error>
+            <mat-error *ngIf="isPanelHasError('serial','minlength')">
+              <strong>حداقل طول سریال پنل 4 کاراکتر است.</strong>
+            </mat-error>
+            <mat-error *ngIf="isPanelHasError('serial','maxlength')">
+              <strong>حداکثر طول سریال پنل 100 کاراکتر است.</strong>
+            </mat-error>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="owner">مالک پنل</label>
+          <!--           (change)="selectedOwnerChanged($event)"-->
+          <ng-select id="owner" [readonly]="isEdit" (change)="loadUserGroups()" [items]="contactsDisplay" formControlName="owner" bindLabel="name" placeholder="مالک را انتخاب کنید">
+          </ng-select>
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+            <mat-error *ngIf="isPanelHasError('owner','required')">
+              <strong>لطفا مالک پنل را وارد کنید.</strong>
+            </mat-error>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="panelForm.controls['owner'].valid" >
+          <ng-select id="group" (change)="selectedGroupChanged($event)" [items]="groupsDisplay" formControlName="group" bindLabel="name" placeholder="گروه را انتخاب کنید">
+          </ng-select>
+          <label class="form-control-label" for="group">گروه پنل</label>
+            <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+              <mat-error *ngIf="isPanelHasError('group','required')">
+                <strong>لطفا گروه پنل را وارد کنید.</strong>
+              </mat-error>
+            </div>
+        </div>
+        <div class="form-group" *ngIf="!panelForm.controls['owner'].valid" >
+          <label class="form-control-label" for="group">گروه پنل</label>
+          <label id="group1" class="form-control" style="border-color: #d9d9d9" placeholder="گروه را انتخاب کنید">
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="name">نام مستعار پنل</label>
+          <input class="form-control input-md" autocomplete="off" formControlName="name"
+                 id="name" type="text">
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+            <mat-error *ngIf="isPanelHasError('name','required')">
+              <strong>لطفا نام مستعار پنل را وارد کنید.</strong>
+            </mat-error>
+            <mat-error *ngIf="isPanelHasError('name','minlength')">
+              <strong>حداقل طول نام مستعار پنل 2 کاراکتر است.</strong>
+            </mat-error>
+            <mat-error *ngIf="isPanelHasError('name','maxlength')">
+              <strong>حداکثر طول نام مستعار پنل 100 کاراکتر است.</strong>
+            </mat-error>
+          </div>
+        </div>
+        <hr>
+        <div class="form-group">
+          <label class="form-control-label" for="hasTemplate">ایجاد پیام خوش آمدگویی</label>
+          <div id="hasTemplate">
+            <ui-switch style="margin:0 10px"
+                       (change)="loadNumberAndTemplate($event)"
+                       [(ngModel)]="hasTemplate"
+                       [ngModelOptions]="{standalone: true}"></ui-switch>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="hasTemplate" >
+          <label class="form-control-label" for="sendNumber">شماره پیام خوش آمدگویی</label>
+          <ng-select id="sendNumber" [items]="numbersDisplay" formControlName="sendNumber" bindLabel="name" placeholder="گروه را انتخاب کنید">
+          </ng-select>
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+            <mat-error *ngIf="isPanelHasError('sendNumber','noSendNumber')">
+              <strong>لطفا شماره پیام خوش آمدگویی را وارد کنید.</strong>
+            </mat-error>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="hasTemplate" >
+          <label class="form-control-label" for="template">پیش نویس پیام خوش آمدگویی</label>
+          <ng-select id="template" (change)="selectedTemplateChanged($event)" [items]="templatesDisplay" formControlName="template" bindLabel="name" placeholder="گروه را انتخاب کنید">
+          </ng-select>
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+            <mat-error *ngIf="isPanelHasError('template','noTemplate')">
+              <strong>لطفا پیش نویس پیام خوش آمدگویی را وارد کنید.</strong>
+            </mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger btn-raised ml-1" (click)="activeModal.close('Close click')">بستن</button>
+  <button type="button" class="btn btn-info btn-raised"
+          (click)="submit()"
+          [disabled]="panelForm.invalid">
+    ثبت پنل
+    <span style="margin-left:10px;"><i class="ft-chevron-right"></i></span>
+  </button>
+</div>

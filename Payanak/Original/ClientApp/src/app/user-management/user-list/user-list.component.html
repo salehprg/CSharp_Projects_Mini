@@ -1,0 +1,77 @@
+
+<div class="row">
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">لیست کاربران</h3>
+        <h6 class="card-subtitle text-muted">لیست کاربران سایت</h6>
+      </div>
+      <div class="card-content">
+        <div class="card-img">
+          <img class="card-img-top img-fluid height-150" src="assets/img/photos/18.jpg" alt="Card image cap">
+          <h4 class="card-title"></h4>
+          <a class="btn btn-floating halfway-fab bg-primary" [routerLink]="'/userManagement/addUser'"><i class="ft-plus"></i></a>
+        </div>
+        <div class="card-body" style="padding: 0">
+          <table class="table table-striped text-center" style="margin: 0">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>نام</th>
+              <th>نام خانوادگی</th>
+              <th>نام کاربری</th>
+              <th>نام مستعار</th>
+              <th>شماره همراه</th>
+              <th>جنسیت</th>
+              <th>اعتبار(تومان)</th>
+              <th>عملیات</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let itm of users;let i=index">
+              <th scope="row">{{(i + 1) | persianNumber}}</th>
+              <td>{{isNullOrEmpty( itm.fName)?'---': itm.fName}}</td>
+              <td>{{isNullOrEmpty(itm.lName)?'---': itm.lName}}</td>
+              <td>{{isNullOrEmpty(itm.username)?'---': itm.username}}</td>
+              <td>{{isNullOrEmpty(itm.nickName)?'---': itm.nickName}}</td>
+              <td>{{(isNullOrEmpty(itm.mobilePhone)?'---': itm.mobilePhone)  | persianNumber}}</td>
+              <td>{{itm.gender == 0? 'زن':'مرد'}}</td>
+              <td>{{itm.credit | persianNumber}} </td>
+              <td>
+                <a [routerLink]="'/userManagement/editUser/' + itm.id" matTooltip="اصلاح" href="javascript:"><i
+                  class="ft-maximize info font-medium-1 mr-2"></i></a>
+                <a (click)="editRole(itm)" matTooltip="اصلاح نقش ها" href="javascript:"><i
+                  class="ft-edit-2 warning font-medium-1 mr-2"></i></a>
+                <a (click)="editCredit(itm)" matTooltip="افزایش اعتبار" href="javascript:"><i
+                  class="ft-credit-card info font-medium-1 mr-2"></i></a>
+        </td>
+            </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+      <div class="card-footer" style="direction: ltr">
+        <div class="row">
+          <div >
+            <ngb-pagination [collectionSize]="length"
+                            [pageSize]="pageSize"
+                            [(page)]="pageNumber"
+                            [maxSize]="5"
+                            (pageChange)="loadData()"
+                            [boundaryLinks]="true"></ngb-pagination>
+          </div>
+          <div style="direction: rtl;font-size: .8rem;flex: 1;text-align: end;margin: 10px;">
+            <span> {{getStart() | persianNumber}} </span>
+            از
+            <span>
+          {{ceil(length) | persianNumber}}
+              ردیف
+        </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

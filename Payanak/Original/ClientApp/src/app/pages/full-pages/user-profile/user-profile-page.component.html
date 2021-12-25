@@ -1,0 +1,481 @@
+<!--User Profile Starts-->
+<!--Basic User Details Starts-->
+<section id="user-profile">
+  <div class="row">
+    <div class="col-12">
+      <div class="card profile-with-cover">
+        <div class="card-img-top img-fluid bg-cover height-300"
+             style="background: url('assets/img/photos/14.jpg') 50%;"></div>
+        <div class="media profil-cover-details row">
+          <div class="col-5">
+            <div class="align-self-start halfway-fab pl-3 pt-2">
+              <div class="text-left">
+                <h3 *ngIf="user && user.personalInfo" class="card-title white">
+                  {{user.personalInfo.fName + ' ' + user.personalInfo.lName}}
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="align-self-center halfway-fab text-center">
+              <a class="btn btn-social-icon btn-round mr-2 mb-2 btn-reddit fileContainer"
+                 style="margin-top: -35px !important;margin-left: -35px !important;"><span class="fa fa-image"></span>
+                <input type="file" accept="image/*" (change)="imageSelected($event)"/>
+              </a>
+              <a class="profile-image">
+                <img [src]="user.accountInfo.picture | toServerPath"
+                     class="rounded-circle img-border gradient-summer width-100" alt="Card image">
+              </a>
+            </div>
+          </div>
+          <div class="col-5">
+          </div>
+        </div>
+        <div class="profile-cover-buttons">
+          <div class="media-body halfway-fab align-self-end">
+            <div class="text-right d-none d-sm-none d-md-none d-lg-block">
+              <!--              <button type="button" class="btn btn-primary btn-raised mr-2"><i class="fa fa-plus"></i> Follow</button>-->
+              <!--              <button type="button" class="btn btn-success btn-raised mr-3"><i class="fa fa-dashcube"></i> Message-->
+              <!--              </button>-->
+            </div>
+            <div class="text-right d-block d-sm-block d-md-block d-lg-none">
+              <button type="button" class="btn btn-primary btn-raised mr-2"><i class="fa fa-plus"></i></button>
+              <button type="button" class="btn btn-success btn-raised mr-3"><i class="fa fa-dashcube"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="profile-section">
+          <div class="row">
+            <div class="col-lg-5 col-md-5 ">
+              <ul class="profile-menu no-list-style">
+                <li>
+                  <a (click)="showPage('AccountInfo')"
+                     [ngClass]="currentPage === 'AccountInfo' ? 'primary font-medium-2 font-weight-600 active' : 'primary font-medium-2 font-weight-600'">اطلاعات
+                    کاربری</a>
+                </li>
+                <li>
+                  <a (click)="showPage('PersonalInfo')"
+                     [ngClass]="currentPage === 'PersonalInfo' ? 'primary font-medium-2 font-weight-600 active' : 'primary font-medium-2 font-weight-600'">اطلاعات
+                    شخصی</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-lg-2 col-md-2 text-center">
+              <span *ngIf="user && user.personalInfo"
+                    class="font-medium-2 text-uppercase"> {{user.personalInfo.fName + ' ' + user.personalInfo.lName}}</span>
+              <p class="grey font-small-2">کاربر</p>
+            </div>
+            <div class="col-lg-5 col-md-5">
+              <ul class="profile-menu no-list-style">
+                <li>
+                  <a (click)="showPage('AdditionalInfo')"
+                     [ngClass]="currentPage === 'AdditionalInfo' ? 'primary font-medium-2 font-weight-600 active' : 'primary font-medium-2 font-weight-600'">اطلاعات
+                    افزودنی</a>
+                </li>
+                <li>
+                  <a (click)="showPage('Photos')"
+                     [ngClass]="currentPage === 'Photos' ? 'primary font-medium-2 font-weight-600 active' : 'primary font-medium-2 font-weight-600'">آدرس</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Basic User Details Ends-->
+
+<!--AccountInfo section starts-->
+<section id="AccountInfo" *ngIf="currentPage === 'AccountInfo'">
+  <div class="row">
+    <div class="col-12">
+      <div class="content-header">اطلاعات کاربری</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+
+        <div class="card-content">
+          <div class="card-body">
+            <div *ngIf="!isEditMode" class="editForm form-border">
+              <div class='row'>
+                <div class='col-12'>
+                  <div class="form-group">
+                    <label class="form-control-label">نام کاربری</label>
+                    <label class="form-control input-md">
+                      <span *ngIf="user && user.accountInfo">
+                      {{user.accountInfo.username}}
+                        </span>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label" for="email">ایمیل</label>
+                    <label class="form-control input-md">
+                      <span *ngIf="user && user.accountInfo">
+                      {{user.accountInfo.email}}
+                        </span>
+                    </label>
+                  </div>
+                  <hr>
+
+                  <div class="row">
+                    <div class='col-12 col-sm-6'>
+                      <div class="form-group">
+                        <label class="form-control-label" for="mobile">تلفن همراه</label>
+                        <label class="form-control input-md">
+                      <span *ngIf="user && user.accountInfo">
+                      {{user.accountInfo.mobilePhone | persianNumber}}
+                        </span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class='col-12 col-sm-6'>
+                      <div class="form-group">
+                        <label class="form-control-label" for="homePhone">تلفن محل سکونت</label>
+                        <label class="form-control input-md">
+                      <span *ngIf="user && user.accountInfo">
+                      {{user.accountInfo.homePhone | persianNumber}}
+                        </span>
+                        </label>
+
+                      </div>
+                    </div>
+                    <div class='col-12 col-sm-6'>
+                      <div class="form-group">
+                        <label class="form-control-label" for="businessPhone">تلفن محل کار</label>
+                        <label class="form-control input-md">
+                      <span *ngIf="user && user.accountInfo">
+                      {{user.accountInfo.businessPhone | persianNumber}}
+                        </span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class='col-12 col-sm-6'>
+                      <div class="form-group">
+                        <label class="form-control-label" for="businessPhone">رمز عبور</label>
+                        <br/>
+                        <a type="button" value="تغییر رمز عبور" routerLink="/pages/ChangePassword" >تغییر رمز عبور</a>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <form *ngIf="isEditMode" [formGroup]="accountInfoForm" class="editForm form-border">
+              <div class='row'>
+                <div class='col-12'>
+                  <div class="form-group">
+                    <label class="form-control-label" for="username">نام کاربری</label>
+                    <input class="form-control input-md" autocomplete="off" formControlName="username"
+                           id="username" type="text">
+                    <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                      <mat-error *ngIf="isAccountInfoHasError('username','required')">
+                        <strong>لطفا نام کاربری را وارد کنید.</strong>
+                      </mat-error>
+                      <mat-error *ngIf="isAccountInfoHasError('username','minlength')">
+                        <strong>حداقل طول نام کاربری 2 کاراکتر است.</strong>
+                      </mat-error>
+                      <mat-error *ngIf="isAccountInfoHasError('username','maxlength')">
+                        <strong>حداکثر طول نام کاربری 100 کاراکتر است.</strong>
+                      </mat-error>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class='col-12 col-sm-6'>
+                      <div class="form-group">
+                        <label class="form-control-label" for="password">رمز عبور</label>
+                        <input class="form-control input-md" autocomplete="off" formControlName="password"
+                               id="password" type="text">
+                        <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                          <mat-error *ngIf="isAccountInfoHasError('password','required')">
+                            <strong>لطفا رمز عبور را وارد کنید.</strong>
+                          </mat-error>
+                          <mat-error *ngIf="isAccountInfoHasError('password','minlength')">
+                            <strong>حداقل طول رمز عبور 2 کاراکتر است.</strong>
+                          </mat-error>
+                          <mat-error *ngIf="isAccountInfoHasError('password','maxlength')">
+                            <strong>حداکثر طول رمز عبور 100 کاراکتر است.</strong>
+                          </mat-error>
+                        </div>
+                      </div>
+                    </div>
+                    <div class='col-12 col-sm-6'>
+                      <div class="form-group">
+                        <label class="form-control-label" for="confirmPass">تکرار رمز عبور</label>
+                        <input class="form-control input-md" autocomplete="off" formControlName="confirmPass"
+                               id="confirmPass" type="text">
+                        <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                          <mat-error *ngIf="isAccountInfoHasError('confirmPass','required')">
+                            <strong>لطفا تکرار رمز عبور را وارد کنید.</strong>
+                          </mat-error>
+                          <mat-error *ngIf="isAccountInfoHasError('confirmPass','notSame')">
+                            <strong>تکرار رمز عبور تحصیح نمی باشد.</strong>
+                          </mat-error>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label" for="email">ایمیل</label>
+                    <input class="form-control input-md" autocomplete="off" formControlName="email" id="email"
+                           type="text">
+                    <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                      <mat-error *ngIf="isAccountInfoHasError('email','email')">
+                        <strong>ایمیل وارد شده صحیح نمی باشد.</strong>
+                      </mat-error>
+
+                      <mat-error *ngIf="isAccountInfoHasError('email','maxlength')">
+                        <strong>حداکثر طول ایمیل 200 کاراکتر است.</strong>
+                      </mat-error>
+                    </div>
+                  </div>
+                  <hr>
+
+                  <div class="row">
+                    <div class='col-12 col-sm-6'>
+                      <div class="form-group">
+                        <label class="form-control-label" for="mobile">تلفن همراه</label>
+                        <input class="form-control input-md" autocomplete="off" formControlName="mobile"
+                               id="mobile" type="text">
+                        <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                          <mat-error *ngIf="isAccountInfoHasError('mobile','required')">
+                            <strong>لطفا تلفن همراه را وارد کنید.</strong>
+                          </mat-error>
+                          <mat-error *ngIf="isAccountInfoHasError('mobile','minlength')">
+                            <strong>حداقل طول تلفن همراه 7 کاراکتر است.</strong>
+                          </mat-error>
+                          <mat-error *ngIf="isAccountInfoHasError('mobile','maxlength')">
+                            <strong>حداکثر طول تلفن همراه 15 کاراکتر است.</strong>
+                          </mat-error>
+                        </div>
+                      </div>
+                    </div>
+                    <div class='col-12 col-sm-6'>
+                      <div class="form-group">
+                        <label class="form-control-label" for="homePhone">تلفن محل سکونت</label>
+                        <input class="form-control input-md" autocomplete="off" formControlName="homePhone"
+                               id="homePhone" type="text">
+                        <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                          <mat-error *ngIf="isAccountInfoHasError('homePhone','minlength')">
+                            <strong>حداقل طول تلفن محل سکونت 7 کاراکتر است.</strong>
+                          </mat-error>
+                          <mat-error *ngIf="isAccountInfoHasError('homePhone','maxlength')">
+                            <strong>حداکثر طول تلفن محل سکونت 15 کاراکتر است.</strong>
+                          </mat-error>
+                        </div>
+                      </div>
+                    </div>
+                    <div class='col-12 col-sm-6'>
+                      <div class="form-group">
+                        <label class="form-control-label" for="businessPhone">تلفن محل کار</label>
+                        <input class="form-control input-md" autocomplete="off"
+                               formControlName="businessPhone" id="businessPhone" type="text">
+                        <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+                          <mat-error *ngIf="isAccountInfoHasError('homePhone','minlength')">
+                            <strong>حداقل طول تلفن محل کار 7 کاراکتر است.</strong>
+                          </mat-error>
+                          <mat-error *ngIf="isAccountInfoHasError('homePhone','maxlength')">
+                            <strong>حداکثر طول تلفن محل کار 15 کاراکتر است.</strong>
+                          </mat-error>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+
+                  <div class="form-group text-center">
+                    <button type="button" class="btn btn-info btn-raised"
+                            [disabled]="accountInfoForm.invalid" awNextStep>
+                      مرحله بعد
+                      <span style="margin-left:10px;">
+                                              <i class="ft-chevron-right"></i>
+                                          </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--AccountInfo section ends-->
+
+<!--User PersonalInfo section starts-->
+<section *ngIf="currentPage === 'PersonalInfo'">
+  <div class="row">
+    <div class="col-12">
+      <div class="content-header">اطلاعات شخصی</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+
+        <div class="card-content">
+          <div class="card-body">
+            <div *ngIf="!isEditMode" class="editForm form-border">
+              <div class='row'>
+                <div class='col-12'>
+
+                  <div class="row">
+                    <div class='col-12 col-sm-6'>
+                      <div class="form-group">
+                        <label class="form-control-label">نام</label>
+                        <label class="form-control input-md">
+                        <span *ngIf="user && user.personalInfo">
+                          {{user.personalInfo.fName}}
+                        </span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class='col-12 col-sm-6'>
+                      <div class="form-group">
+                        <label class="form-control-label">نام خانوادگی</label>
+                        <label class="form-control input-md">
+                        <span *ngIf="user && user.personalInfo">
+                          {{user.personalInfo.lName}}
+                        </span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label">نام مستعار</label>
+                    <label class="form-control input-md">
+                        <span *ngIf="user && user.personalInfo">
+                          {{user.personalInfo.nickName}}
+                        </span>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label">جنسیت</label>
+                    <label class="form-control input-md">
+                        <span *ngIf="user && user.personalInfo">
+                          {{user.personalInfo.gender == 2 ? ('زن') : (user.personalInfo.gender == 1 ? ('مرد') : ('نامشخص'))}}
+                        </span>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label">تاریخ تولد</label>
+                    <label class="form-control input-md">
+                        <span *ngIf="user && user.personalInfo">
+                          {{user.personalInfo.birthday | persianDate}}
+                        </span>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label">کد ملی</label>
+                    <label class="form-control input-md">
+                        <span *ngIf="user && user.personalInfo">
+                          {{user.personalInfo.nationalCode | persianNumber}}
+                        </span>
+                    </label>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--User PersonalInfo section ends-->
+
+<!--User AdditionalInfo section starts-->
+<section id="AdditionalInfo" *ngIf="currentPage === 'AdditionalInfo'">
+  <div class="row">
+    <div class="col-12">
+      <div class="content-header">اطلاعات افزودنی</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+
+        <div class="card-content">
+          <div class="card-body">
+            <div *ngIf="!isEditMode" class="editForm form-border">
+              <div class='row'>
+                <div class='col-12'>
+                  <div class="form-group">
+                    <label class="form-control-label">اینستاگرام</label>
+                    <label class="form-control input-md">
+                      <span *ngIf="user && user.additionalInfo">
+                        {{user.additionalInfo.instagram}}
+                      </span>
+                    </label>
+
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label">تلگرام</label>
+                    <label class="form-control input-md">
+                      <span *ngIf="user && user.additionalInfo">
+                        {{user.additionalInfo.telegram}}
+                      </span>
+                    </label>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-control-label">تاریخ خاص</label>
+                    <label class="form-control input-md">
+                      <span *ngIf="user && user.additionalInfo">
+                        {{user.additionalInfo.specialDay | persianDate}}
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--User AdditionalInfo section starts-->
+
+<!--User's uploaded photos section starts-->
+<section id="photos" *ngIf="currentPage === 'Photos'">
+  <div class="row">
+    <div class="col-12">
+      <div class="content-header">آدرس</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+
+        <div class="card-content">
+          <div class="card-body">
+            <div *ngIf="!isEditMode" class="editForm form-border">
+              <div class='row'>
+                <div *ngIf="user && user.addressInfo" class="col-12" style="height: 300px">
+                  <!--                  (addressChanged)="addressChanged($event)"-->
+                  <app-map [lon]="user.addressInfo.longitude"
+                           [lat]="user.addressInfo.latitude" [zoom]="18">
+                    <app-layer>
+
+                    </app-layer>
+                  </app-map>
+
+                </div>
+                <div *ngIf="user && user.addressInfo" class="col-12">
+                  <span> {{user.addressInfo.region + ' - ' + user.addressInfo.city + ' - ' + user.addressInfo.address}} </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--User's uploaded photos section starts-->
+<!--User Profile Starts-->

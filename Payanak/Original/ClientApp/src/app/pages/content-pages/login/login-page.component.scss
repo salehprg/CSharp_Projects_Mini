@@ -1,0 +1,49 @@
+// Login Page
+@import "../../../../assets/sass/scss/variables";
+
+#login {
+  //background-image: url('../../../../assets/img/gallery/light-bg.jpg');
+  background-color: #009DA0;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+
+  .login-img {
+    padding: 0;
+    background: #f0f0f0;
+  }
+
+  .login-btn {
+    .btn.btn-outline-primary {
+      &:hover {
+        a {
+          color: #fff;
+        }
+      }
+    }
+  }
+
+  .recover-pass {
+    button.btn.btn-primary {
+      color: #fff !important;
+    }
+  }
+
+  .forgot-password-option,
+  .remember-me {
+
+    a.text-decoration-none,
+    .custom-control-label {
+      font-size: 14px;
+    }
+  }
+  .forgot-password-option{
+    a {
+      color: map_get($map: $theme-colors, $key: primary) !important;
+    }
+  }
+}
+.card{
+  padding: 15px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 30px 100px -2px #434d6b, 0 10px 80px 0 rgba(0, 0, 0, 0.12);
+  background-color: #fff;
+}

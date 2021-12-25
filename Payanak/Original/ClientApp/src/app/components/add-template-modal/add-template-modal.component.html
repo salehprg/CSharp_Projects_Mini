@@ -1,0 +1,53 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{header}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+  <form [formGroup]="templateForm" class="editForm form-border">
+    <h4 class="head text-center">لطفا اطلاعات پیش نویس را وارد نمایید.</h4>
+    <br/>
+    <div class='row'>
+
+      <div class='col-12'>
+        <div class="form-group">
+          <label class="form-control-label" for="title">عنوان</label>
+          <input class="form-control input-md" autocomplete="off" formControlName="title"
+                 id="title" type="text">
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+            <mat-error *ngIf="isTemplateHasError('title','required')">
+              <strong>لطفا عنوان پیش نویس را وارد کنید.</strong>
+            </mat-error>
+            <mat-error *ngIf="isTemplateHasError('title','minlength')">
+              <strong>حداقل طول عنوان پیش نویس 2 کاراکتر است.</strong>
+            </mat-error>
+            <mat-error *ngIf="isTemplateHasError('title','maxlength')">
+              <strong>حداکثر طول عنوان پیش نویس 100 کاراکتر است.</strong>
+            </mat-error>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="body">متن</label>
+          <textarea class="form-control input-md" autocomplete="off" formControlName="body" id="body"
+                    type="text"></textarea>
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+            <mat-error *ngIf="isTemplateHasError('body','maxlength')">
+              <strong>حداکثر طول متن 2000 کاراکتر است.</strong>
+            </mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger btn-raised ml-1" (click)="activeModal.close('Close click')">بستن</button>
+  <button type="button" class="btn btn-info btn-raised"
+          (click)="submit()"
+          [disabled]="templateForm.invalid">
+    ثبت پیش نویس
+    <span style="margin-left:10px;"><i class="ft-chevron-right"></i></span>
+  </button>
+</div>

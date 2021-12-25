@@ -1,0 +1,97 @@
+<!--Login Page Starts-->
+<section id="login">
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+  <div class="container-fluid">
+    <div class="row full-height-vh m-0">
+      <div class="col-12 d-flex align-items-center justify-content-center">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body login-img">
+              <div class="row m-0">
+                <div
+                  class="col-lg-6 d-lg-block d-none text-center align-middle"
+                  style="padding: 0 !important;"
+                >
+                  <img
+                    src="../../assets/img/gallery/login-side.jpg"
+                    alt=""
+                    class="img-fluid mt-5"
+                    style="margin-top: 0 !important;"
+                    width="400"
+                    height="230"
+                  />
+                </div>
+
+                <div class="col-lg-6 col-md-12 bg-white px-4 pt-3">
+                  <form class="rn-form" [formGroup]="loginForm" autocomplete="off">
+                    <h4 class="card-title mb-2">ورود کاربران</h4>
+                    <p class="card-text mb-3">
+                      به سامانه پیامکی پایانک خوش آمدید.
+                    </p>
+                    <!--                  <div *ngIf="hasError()">-->
+                    <!--                  <ngb-alert *ngFor="let err of error" type="danger" [dismissible]="false">-->
+                    <!--                    {{ err }}-->
+                    <!--                  </ngb-alert>-->
+                    <!--                  </div>-->
+                    <input
+
+                      formControlName="username"
+                      autocomplete="off"
+                      type="text"
+                      class="form-control mb-3"
+                      placeholder="نام کاربری"
+                    />
+                    <div style="font-size: .75rem;margin-bottom: 1rem;margin-top: -.5rem;min-height: 1.2rem">
+                    <mat-error *ngIf="isControlHasError('username','required')">
+                      <strong>لطفا نام کاربری را وارد کنید.</strong>
+                    </mat-error>
+                    <mat-error *ngIf="isControlHasError('username','minlength')">
+                      <strong>حداقل طول نام کاربری 2 کاراکتر است.</strong>
+                    </mat-error>
+                    <mat-error *ngIf="isControlHasError('username','maxlength')">
+                      <strong>حداکثر طول نام کاربری 100 کاراکتر است.</strong>
+                    </mat-error>
+                    </div>
+                    <input
+                      formControlName="password"
+                      autocomplete="off"
+                      type="password"
+                      class="form-control mb-3"
+                      placeholder="رمز عبور"
+                    />
+                    <div style="font-size: .75rem;margin-bottom: 1rem;margin-top: -.5rem;min-height: 1.2rem">
+                      <mat-error *ngIf="isControlHasError('password','required')">
+                        <strong>لطفا رمز عبور را وارد کنید.</strong>
+                      </mat-error>
+                      <mat-error *ngIf="isControlHasError('password','minlength')">
+                        <strong>حداقل طول رمز عبور 2 کاراکتر است.</strong>
+                      </mat-error>
+                      <mat-error *ngIf="isControlHasError('password','maxlength')">
+                        <strong>حداکثر طول رمز عبور 100 کاراکتر است.</strong>
+                      </mat-error>
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                      <div class="forgot-password-option">
+                        <a
+                          [routerLink]="['/pages/register']"
+                          class="text-decoration-none text-primary"
+                        >ثبت نام</a
+                        >
+                      </div>
+                      <div class="recover-pass left">
+                        <a href="javascript:void(0)" (click)="onSubmit()"
+                           class="btn btn-raised mr-1 btn-primary">ورود</a>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--Login Page Ends-->

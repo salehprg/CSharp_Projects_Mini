@@ -1,0 +1,64 @@
+<div class="row">
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" ></ngx-loading>
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">لیست شماره ها</h3>
+        <h6 class="card-subtitle text-muted">لیست شماره هایی که به شما انتصاب داده شده است</h6>
+      </div>
+      <div class="card-content">
+        <div class="card-img">
+          <img class="card-img-top img-fluid height-150" src="assets/img/photos/18.jpg" alt="Card image cap">
+          <h4 class="card-title"></h4>
+        </div>
+        <div class="card-body" style="padding: 0">
+          <table class="table table-striped text-center" style="margin: 0">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>شماره</th>
+              <th>وضعیت</th>
+              <th>توضیحات</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let itm of numbers;let i=index">
+              <th scope="row">{{(i + 1) | persianNumber}}</th>
+              <td>{{itm.number | persianNumber}}</td>
+
+              <td *ngIf="!itm.isBlocked"><span class="badge badge-primary">فعال</span></td>
+              <td *ngIf="itm.isBlocked"><span class="badge badge-warning">غیر فعال</span></td>
+              <td *ngIf=" itm.type==1">
+                خط تبلیغاتی
+              </td>
+              <td *ngIf=" itm.type==0">
+                خط خدماتی
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-footer" style="direction: ltr">
+        <div class="row">
+          <div>
+            <ngb-pagination [collectionSize]="length"
+                            [pageSize]="pageSize"
+                            [(page)]="pageNumber"
+                            [maxSize]="5"
+                            (pageChange)="loadData()"
+                            [boundaryLinks]="true"></ngb-pagination>
+          </div>
+          <div style="direction: rtl;font-size: .8rem;flex: 1;text-align: end;margin: 10px;">
+            <span> {{getStart() | persianNumber}} </span>
+            از
+            <span>
+            {{ceil(length) | persianNumber}}
+              ردیف
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

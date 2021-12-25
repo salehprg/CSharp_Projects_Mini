@@ -1,0 +1,103 @@
+<div class="modal-header">
+  <h4 class="modal-title">افزودن شماره</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="numberForm" class="editForm form-border">
+    <h4 class="head text-center">لطفا اطلاعات شماره را وارد نمایید.</h4>
+    <br/>
+    <div class='row'>
+      <div class='col-12'>
+        <div class="form-group">
+          <label class="form-control-label" for="number">شماره</label>
+          <input class="form-control input-md" autocomplete="off" formControlName="number"
+                 id="number" type="text">
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+            <mat-error *ngIf="isNumberHasError('number','required')">
+              <strong>لطفا شماره را وارد کنید.</strong>
+            </mat-error>
+            <mat-error *ngIf="isNumberHasError('number','minlength')">
+              <strong>حداقل طول شماره 4 کاراکتر است.</strong>
+            </mat-error>
+            <mat-error *ngIf="isNumberHasError('number','maxlength')">
+              <strong>حداکثر طول شماره 100 کاراکتر است.</strong>
+            </mat-error>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="isShared">اشتراک گذاشتن شماره</label>
+          <div id="isShared">
+            <ui-switch style="margin:0 10px" (change)="selectedShareChanged($event)"
+                       [checked]="numberModel.isShared"></ui-switch>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="!numberModel.isShared">
+          <label class="form-control-label" for="owner">مالک شماره</label>
+<!--           (change)="selectedOwnerChanged($event)"-->
+          <ng-select id="owner" [items]="contactsDisplay" formControlName="owner" bindLabel="name" placeholder="مالک را انتخاب کنید">
+          </ng-select>
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+            <mat-error *ngIf="isNumberHasError('owner','required')">
+              <strong>لطفا مالک شماره را وارد کنید.</strong>
+            </mat-error>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="username">نام کاربری شماره</label>
+          <input class="form-control input-md" autocomplete="off" formControlName="username"
+                 id="username" type="text">
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+            <mat-error *ngIf="isNumberHasError('username','required')">
+              <strong>لطفا نام کاربری شماره را وارد کنید.</strong>
+            </mat-error>
+            <mat-error *ngIf="isNumberHasError('username','minlength')">
+              <strong>حداقل طول نام کاربری شماره 2 کاراکتر است.</strong>
+            </mat-error>
+            <mat-error *ngIf="isNumberHasError('username','maxlength')">
+              <strong>حداکثر طول نام کاربری شماره 100 کاراکتر است.</strong>
+            </mat-error>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="password">پسورد شماره</label>
+          <input class="form-control input-md" autocomplete="off" formControlName="password"
+                 id="password" type="text">
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+            <mat-error *ngIf="isNumberHasError('password','required')">
+              <strong>لطفا پسورد شماره را وارد کنید.</strong>
+            </mat-error>
+            <mat-error *ngIf="isNumberHasError('password','minlength')">
+              <strong>حداقل طول پسورد شماره 2 کاراکتر است.</strong>
+            </mat-error>
+            <mat-error *ngIf="isNumberHasError('password','maxlength')">
+              <strong>حداکثر طول پسورد شماره 100 کاراکتر است.</strong>
+            </mat-error>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="type">نوع شماره</label>
+          <select id="type" formControlName="type" #type name="type" class="form-control">
+            <option value="0" selected>خدماتی</option>
+            <option value="1">تبلیغاتی</option>
+          </select>
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+            <mat-error *ngIf="isNumberHasError('type','required')">
+              <strong>لطفا نوع شماره را وارد کنید.</strong>
+            </mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger btn-raised ml-1" (click)="activeModal.close('Close click')">بستن</button>
+  <button type="button" class="btn btn-info btn-raised"
+          (click)="submit()"
+          [disabled]="numberForm.invalid">
+    ثبت شماره
+    <span style="margin-left:10px;"><i class="ft-chevron-right"></i></span>
+  </button>
+</div>

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>IP_Camera</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Onvif.IP.Camera.Viewer" Version="*"/>
+    <PackageReference Include="IPCameraSDK" Version="1.0.0"/>
+    <PackageReference Include="RtspClientSharp" Version="1.3.3"/>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,78 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{header}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="groupForm" class="editForm form-border">
+    <h4 class="head text-center">لطفا اطلاعات گروه را وارد نمایید.</h4>
+    <br/>
+    <div class='row'>
+
+      <div class="col-12 text-center">
+        <a class="btn btn-social-icon btn-round mr-2 mb-2 btn-reddit fileContainer"
+           style="margin-top: -35px;margin-left: -35px;"><span class="fa fa-image"></span>
+          <input type="file" accept="image/*" (change)="imageSelected($event)"/>
+        </a>
+        <img [src]="group.picture | toServerPath"
+             class="rounded-circle img-border gradient-summer width-100" alt="Card image">
+        <p>تصویر</p>
+      </div>
+      <div class='col-12'>
+        <div class="form-group">
+          <label class="form-control-label" for="name">نام</label>
+          <input class="form-control input-md" autocomplete="off" formControlName="name"
+                 id="name" type="text">
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+            <mat-error *ngIf="isGroupHasError('name','required')">
+              <strong>لطفا نام گروه را وارد کنید.</strong>
+            </mat-error>
+            <mat-error *ngIf="isGroupHasError('name','minlength')">
+              <strong>حداقل طول نام گروه 2 کاراکتر است.</strong>
+            </mat-error>
+            <mat-error *ngIf="isGroupHasError('name','maxlength')">
+              <strong>حداکثر طول نام گروه 100 کاراکتر است.</strong>
+            </mat-error>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="title">عنوان</label>
+          <input class="form-control input-md" autocomplete="off" formControlName="title"
+                 id="title" type="text">
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+            <mat-error *ngIf="isGroupHasError('title','required')">
+              <strong>لطفا عنوان را وارد کنید.</strong>
+            </mat-error>
+            <mat-error *ngIf="isGroupHasError('title','minlength')">
+              <strong>حداقل طول عنوان 2 کاراکتر است.</strong>
+            </mat-error>
+            <mat-error *ngIf="isGroupHasError('title','maxlength')">
+              <strong>حداکثر طول عنوان 100 کاراکتر است.</strong>
+            </mat-error>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="descriptions">توضیحات</label>
+          <textarea class="form-control input-md" autocomplete="off" formControlName="descriptions" id="descriptions"
+                    type="text"></textarea>
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+            <mat-error *ngIf="isGroupHasError('descriptions','maxlength')">
+              <strong>حداکثر طول توضیحات 1000 کاراکتر است.</strong>
+            </mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger btn-raised ml-1" (click)="activeModal.close('Close click')">بستن</button>
+  <button type="button" class="btn btn-primary btn-raised"
+          (click)="submit()"
+          [disabled]="groupForm.invalid">
+    ثبت گروه
+    <span style="margin-left:10px;"><i class="ft-chevron-right"></i></span>
+  </button>
+</div>

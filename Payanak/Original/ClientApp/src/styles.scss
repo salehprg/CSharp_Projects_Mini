@@ -1,0 +1,58 @@
+// @import "assets/app";
+@font-face {
+  font-family: 'SiteFont';
+  src: url('assets/fonts/Gandom.ttf');
+  src: url('assets/fonts/Gandom.eot');
+  src: url('assets/fonts/Gandom.woff');
+}
+
+app-map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 2em;
+  width: 100%;
+}
+
+$farsiFont: 'SiteFont', sans-serif;
+body {
+  font-family: $farsiFont !important;
+  text-align: right !important;
+  direction: rtl;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $farsiFont !important;
+}
+
+x-chartist {
+  display: unset !important;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.modal-header .close {
+  padding: 1rem 1rem;
+  margin: -1rem auto -1rem -1rem !important;
+}
+
+.layout-dark {
+  .mat-dialog-container {
+    background-color: #35364b;
+
+  }
+  .ng-select .ng-select-container {
+    background-color: transparent;
+    color: #bdbdc7 !important;
+    padding: 0 12px;
+  }
+}
+
+

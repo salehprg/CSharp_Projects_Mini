@@ -1,0 +1,103 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{header}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" perfectScrollbar [ngStyle]="{'max-height.px': height}">
+  <ngx-loading [show]="isLoading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+  <form [formGroup]="ssForm" class="editForm form-border">
+    <h4 class="head text-center">لطفا اطلاعات ارسال زماندار را وارد نمایید.</h4>
+    <br/>
+    <div class='row'>
+      <div class='col-12'>
+        <div class="form-group">
+          <label class="form-control-label" for="user">کاربر</label>
+          <label class="form-control" id="user">{{user.fName + ' ' + user.lName}}</label>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="ssi">نوع ارسال</label>
+          <ng-select (change)="selectedSSIChanged($event)" id="ssi" [items]="ssiDisplay" formControlName="ssi"
+                     bindLabel="name"
+                     placeholder="نوع ارسال را انتخاب کنید">
+          </ng-select>
+
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+            <mat-error *ngIf="isSSHasError('ssi','noSSI')">
+              <strong>لطفا نوع ارسال را وارد کنید.</strong>
+            </mat-error>
+          </div>
+        </div>
+        <label class="d-block">زمان انتخابی </label>
+        <div class="form-group">
+          <div class="custom-control custom-radio custom-control-inline">
+            <input #rdoBirthday (change)="selectedChanged()" type="radio" id="rdoBirthday" name="rdo" class="custom-control-input">
+            <label class="custom-control-label" for="rdoBirthday">تاریخ تولد</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input #rdoSpecialDay (change)="selectedChanged()" type="radio" id="rdoSpecialDay" name="rdo" class="custom-control-input">
+            <label class="custom-control-label" for="rdoSpecialDay">تاریخ خاص</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input #rdoSelectDay type="radio" id="rdoSelectDay" checked name="rdo" class="custom-control-input">
+            <label class="custom-control-label" for="rdoSelectDay">تاریخ انتخابی</label>
+          </div>
+        </div>
+        <div class="form-group" *ngIf="rdoSelectDay.checked">
+          <label class="form-control-label" for="birthday"> تاریخ</label>
+          <div class="input-group">
+
+            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <i class="fa fa-calendar" (click)="picker.open()"></i>
+                                </span>
+            </div>
+            <input class="form-control input-md" autocomplete="off" formControlName="day"
+                   [matDatepicker]="picker"
+                   id="birthday"
+                   type="text">
+          </div>
+          <mat-datepicker #picker></mat-datepicker>
+          <div style="font-size: .75rem;margin-bottom: 1rem;min-height: 1.2rem">
+          </div>
+        </div>
+        <div class="input-group" *ngIf="ssd && ssd.id != -1">
+          <table class="table table-striped text-center" style="margin: 0">
+            <thead>
+            <tr>
+              <th>تاریخ شروع</th>
+              <th>تاریخ آخرین اجرا</th>
+              <th>تعداد اجرا</th>
+              <th>عملیات</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>{{ssd.date | persianDate}}</td>
+
+              <td>{{ssd.updatedDate | persianDate}}</td>
+              <td>
+                {{ssd.counter}}
+              </td>
+              <td>
+                <a (click)="delete()" matTooltip="حذف" href="javascript:">
+                  <i class="ft-trash-2 danger font-medium-1 mr-2"></i>
+                </a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger btn-raised ml-1" (click)="activeModal.close('Close click')">بستن</button>
+  <button type="button" class="btn btn-primary btn-raised"
+          (click)="submit()"
+          [disabled]="ssForm.invalid">
+    ثبت
+    <span style="margin-left:10px;"><i class="ft-chevron-right"></i></span>
+  </button>
+</div>

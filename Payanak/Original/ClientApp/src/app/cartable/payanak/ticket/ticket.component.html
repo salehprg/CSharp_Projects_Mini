@@ -1,0 +1,111 @@
+<div class="chat-application">
+  <div #contentOverlay class="content-overlay" (click)="onContentOverlay()"></div>
+  <div [perfectScrollbar] #chatSidebar class="chat-sidebar float-left d-none d-sm-none d-md-block d-lg-block">
+    <div class="chat-sidebar-content">
+      <div class="chat-fixed-search p-2">
+        <form>
+          <div class="position-relative">
+<!--            <a href="javascript:void(0)" (click)="AddTicket()" class="btn btn-flat mr-1 btn-primary">+ افزودن تیکت</a>-->
+          </div>
+        </form>
+      </div>
+      <div id="users-list" class="list-group position-relative">
+        <div class="users-list-padding">
+          <a *ngFor="let ticket of tickets"
+             class="list-group-item no-border"
+             (click)="SetActiveId($event, ticket)">
+            <span class="media">
+              <span class="avatar avatar-md avatar-online">
+                <img class="media-object d-flex mr-3 bg-primary width-50 height-50 rounded-circle" [src]="ticket.responder!=null ? (ticket.responder.picture | toServerPath): null"
+                     alt="">
+                <i></i>
+              </span>
+              <div class="media-body  text-left">
+                <h6 class="list-group-item-heading">
+                  {{ticket.header}}
+                  <span class="font-small-3 float-right primary">{{ticket.createDate | persianDate}}</span>
+                </h6>
+                <p class="list-group-item-text text-muted">
+                  <i class="ft-check primary font-small-2"></i>
+                  {{ticket.lastMessage}}
+                  <span *ngIf="ticket.unread>0" class="float-right
+                        primary">
+                    <span class="badge badge-pill badge-primary">{{ticket.unread}}</span>
+                  </span>
+                </p>
+              </div>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chat-name p-2 bg-white">
+    <div class="media">
+      <span class="chat-app-sidebar-toggle ft-align-justify font-large-1 mr-2 d-none d-block d-sm-block d-md-none" (click)="onSidebarToggle()"></span>
+      <div *ngIf="chatLoaded" class="media-body text-left">
+        <img [src]="activeChatUserImg | toServerPath" width="37" class="rounded-circle mr-1" alt="avatar" />
+        <span>{{ activeChatUser }}</span>
+        <i class="ft-more-vertical float-right mt-1"></i>
+        <a  class="float-right text-warning px-1 mt-1"
+            matTooltip="بستن تیکت"
+            (click)="deactive()">
+          <i class="icon-check"></i>
+        </a>
+        <a  class="float-right text-danger px-1 mt-1"
+            matTooltip="حذف تیکت"
+            (click)="delete()">
+          <i class="icon-trash"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+  <section *ngIf="chatLoaded" class="chat-app-window" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+    <div class="badge badge-dark mb-1">Chat History</div>
+    <div class="chats">
+      <div class="chats">
+        <div [ngClass]="[chat.chatClass]" *ngFor="let chat of chat">
+          <div class="chat-avatar">
+            <a class="avatar" data-toggle="tooltip" data-placement="[chat.avatar]" title="" data-original-title="">
+              <img [src]="chat.imagePath | toServerPath" class="width-50" alt="avatar" />
+            </a>
+          </div>
+          <div class="chat-body">
+            <div class="chat-content" *ngFor="let message of chat.messages">
+              <p *ngIf="chat.messageType === 'text'">{{ message }}</p>
+
+            </div>
+          </div>
+          <p class="time" *ngIf="chat.time !='' ">{{chat.time}}</p>
+        </div>
+
+        <div class="chat" *ngIf="messages.length > 0">
+          <div class="chat-avatar">
+            <a class="avatar" data-toggle="tooltip" data-placement="right" title="" data-original-title="">
+              <img src="assets/img/portrait/small/avatar-s-1.png" class="width-50" alt="avatar" />
+            </a>
+          </div>
+          <div class="chat-body">
+            <div class="chat-content" *ngFor="let message of messages">
+              <p>{{ message }}</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <section *ngIf="chatLoaded" class="chat-app-form bg-blue-grey bg-lighten-5" style="min-height: 82px">
+    <div class="chat-app-input row mt-2" *ngIf="!isDeactive()">
+      <div class="form-group position-relative has-icon-left col-lg-9 col-7 m-0 px-3">
+        <input #body type="text" (keydown.enter)="onKeydown($event, body.value)" class="form-control" id="iconLeft4" placeholder="پیام خود را یادداشت کنید">
+      </div>
+      <div class="form-group position-relative has-icon-left col-lg-2 col-4 m-0">
+        <button type="button" class="btn btn-raised btn-primary px-4"
+                (click)="sendTicketBody(body.value)">
+          <span class="ml-1">ارسال</span>
+        </button>
+      </div>
+    </div>
+  </section>
+</div>

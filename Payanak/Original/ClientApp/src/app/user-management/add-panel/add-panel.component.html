@@ -1,0 +1,73 @@
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">لیست پنل ها</h3>
+        <h6 class="card-subtitle text-muted">لیست پنل های اضافه شده در سایت</h6>
+      </div>
+      <div class="card-content">
+        <div class="card-img">
+          <img class="card-img-top img-fluid height-150" src="assets/img/photos/12.jpg" alt="Card image cap">
+          <h4 class="card-title"></h4>
+          <a class="btn btn-floating halfway-fab bg-primary" (click)="lunchAddPanel()"><i class="ft-plus"></i></a>
+        </div>
+        <div class="card-body" style="padding: 0">
+
+          <table class="table table-striped text-center" style="margin: 0">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>نام</th>
+              <th>سریال</th>
+              <th>گروه</th>
+              <th>مالک</th>
+              <th>وضعیت</th>
+              <th>عملیات</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let itm of panels;let i=index">
+              <th scope="row">{{i + 1}}</th>
+              <td>{{itm.name}}</td>
+              <td>{{itm.serial}}</td>
+              <td>{{(itm.group ? itm.group.title : '')}}</td>
+              <td>{{(itm.user ? (itm.user.fName + ' ' + itm.user.lName ) : '')}}</td>
+              <td *ngIf="itm.isBlocked"><span class="badge badge-danger">بلاک</span></td>
+              <td *ngIf="!itm.isBlocked && itm.status == 1"><span class="badge badge-primary">فعال</span></td>
+              <td *ngIf="!itm.isBlocked && itm.status == 0"><span class="badge badge-warning">غیر فعال</span></td>
+              <td>
+                <a (click)="edit(itm)" matTooltip="اصلاح" href="javascript:"><i
+                  class="ft-edit-2 info font-medium-1 mr-2"></i></a>
+                <a (click)="deactivate(itm)" matTooltip="تغییر وضعیت" href="javascript:"><i class="ft-minus-circle warning font-medium-1 mr-2"></i></a>
+                <a (click)="block(itm)" matTooltip="تغییر بلاک" href="javascript:"><i class="ft-slash primary font-medium-1 mr-2"></i></a>
+                <a (click)="delete(itm)" matTooltip="حذف" href="javascript:"><i class="ft-trash-2 danger font-medium-1 mr-2"></i></a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+      <div class="card-footer" style="direction: ltr">
+        <div class="row">
+          <div >
+            <ngb-pagination [collectionSize]="length"
+                            [pageSize]="pageSize"
+                            [(page)]="pageNumber"
+                            [maxSize]="5"
+                            (pageChange)="loadData()"
+                            [boundaryLinks]="true"></ngb-pagination>
+          </div>
+          <div style="direction: rtl;font-size: .8rem;flex: 1;text-align: end;margin: 10px;">
+            <span> {{getStart()}} </span>
+            از
+            <span>
+          {{ceil(length)}}
+        </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

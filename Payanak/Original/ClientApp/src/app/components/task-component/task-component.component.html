@@ -1,0 +1,22 @@
+<div>
+  <div *ngFor="let itm of tasks.reverse()" class="col-12" style="padding: 0">
+    <div  *ngFor="let msg of itm.messages" class="col-12" style="padding: 0">
+      <div class="card " [ngClass]="msg.class"  style="margin: 0;border-bottom: 2px solid">
+        <div class="card-content">
+          <div class="px-3 py-3">
+            <div class="media">
+              <div class="media-body white text-left">
+                <h3>{{itm.percent}} %</h3>
+                <p>{{msg.header}}</p>
+                <span>{{msg.body}}</span>
+              </div>
+              <div class="media-right align-self-center">
+                <i class="icon-speedometer white font-large-2 float-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

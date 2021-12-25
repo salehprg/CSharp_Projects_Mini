@@ -1,0 +1,138 @@
+<!--Statistics cards Starts-->
+<div class="row" *ngIf="data">
+	<div class="col-xl-3 col-lg-6 col-md-6 col-12">
+		<div class="card gradient-blackberry">
+			<div class="card-content">
+				<div class="card-body pt-2 pb-0">
+					<div class="media">
+						<div class="media-body white text-left">
+							<h3 class="font-large-1 mb-0">{{data.Credit.toString() | persianUnit : 'تومان'}}</h3>
+							<span>اعتبار</span>
+						</div>
+						<div class="media-right white text-right">
+							<i class="icon-credit-card font-large-1"></i>
+						</div>
+					</div>
+				</div>
+				<div id="Widget-line-chart" class="height-75 WidgetlineChart WidgetlineChartshadow mb-2">
+					<x-chartist style="display: unset" class="" [data]="WidgetlineChart.data" [type]="WidgetlineChart.type" [options]="WidgetlineChart.options" [responsiveOptions]="WidgetlineChart.responsiveOptions"
+					 [events]="WidgetlineChart.events">
+					</x-chartist>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-3 col-lg-6 col-md-6 col-12">
+		<div class="card gradient-ibiza-sunset">
+			<div class="card-content">
+				<div class="card-body pt-2 pb-0">
+					<div class="media">
+						<div class="media-body white text-left">
+							<h3 class="font-large-1 mb-0">{{data.GroupCount.toString() | persianUnit : 'گروه'}}</h3>
+							<span>تعداد گروه ها</span>
+						</div>
+						<div class="media-right white text-right">
+							<i class="icon-users font-large-1"></i>
+						</div>
+					</div>
+				</div>
+				<div id="Widget-line-chart1" class="height-75 WidgetlineChart WidgetlineChartshadow mb-2">
+					<x-chartist class="" [data]="WidgetlineChart.data" [type]="WidgetlineChart.type" [options]="WidgetlineChart.options" [responsiveOptions]="WidgetlineChart.responsiveOptions"
+					 [events]="WidgetlineChart.events">
+					</x-chartist>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xl-3 col-lg-6 col-md-6 col-12">
+		<div class="card gradient-green-tea">
+			<div class="card-content">
+				<div class="card-body pt-2 pb-0">
+					<div class="media">
+						<div class="media-body white text-left">
+							<h3 class="font-large-1 mb-0">{{data.PanelCount.toString() | persianUnit : 'عدد'}}</h3>
+							<span>تعداد دستگاه ها</span>
+						</div>
+						<div class="media-right white text-right">
+							<i class="ft-cpu font-large-1"></i>
+						</div>
+					</div>
+				</div>
+				<div id="Widget-line-chart2" class="height-75 WidgetlineChart WidgetlineChartshadow mb-2">
+					<x-chartist class="" [data]="WidgetlineChart.data" [type]="WidgetlineChart.type" [options]="WidgetlineChart.options" [responsiveOptions]="WidgetlineChart.responsiveOptions"
+					 [events]="WidgetlineChart.events">
+					</x-chartist>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-3 col-lg-6 col-md-6 col-12">
+		<div class="card gradient-pomegranate">
+			<div class="card-content">
+				<div class="card-body pt-2 pb-0">
+					<div class="media">
+						<div class="media-body white text-left">
+							<h3 class="font-large-1 mb-0">{{data.ContactCount.toString() | persianUnit : 'نفر'}}</h3>
+							<span>تعداد مخاطبین</span>
+						</div>
+						<div class="media-right white text-right">
+							<i class="icon-user font-large-1"></i>
+						</div>
+					</div>
+				</div>
+				<div id="Widget-line-chart3" class="height-75 WidgetlineChart WidgetlineChartshadow mb-2">
+					<x-chartist class="" [data]="WidgetlineChart.data" [type]="WidgetlineChart.type" [options]="WidgetlineChart.options" [responsiveOptions]="WidgetlineChart.responsiveOptions"
+					 [events]="WidgetlineChart.events">
+					</x-chartist>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Statistics cards Ends-->
+
+<!--Line with Area Chart 1 Starts-->
+<div class="row">
+  <div class="col-lg-6 col-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">تعداد مخاطبین افزوده شده 10 روز گذشته</h4>
+      </div>
+      <div class="card-content">
+        <div class="card-body">
+          <div class="chart-info mb-3 ml-3">
+            <span class="text-uppercase mr-3"><i class="fa fa-circle primary font-small-2 mr-1"></i>  تعداد مخاطبین</span>
+
+          </div>
+          <div id="line-area" class="height-350  lineArea2 lineChart1Shadow">
+            <x-chartist #contact10 [data]="lineArea.data" [type]="lineArea.type" [options]="lineArea.options"
+                        [responsiveOptions]="lineArea.responsiveOptions" [events]="lineArea.events">
+            </x-chartist>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 col-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">تعداد پیام های ارسالی</h4>
+      </div>
+      <div class="card-content">
+        <div class="card-body">
+          <div class="chart-info mb-3 ml-3">
+            						<span class="text-uppercase mr-3"><i class="fa fa-circle primary font-small-2 mr-1"></i> تعداد محاسبه شده</span>
+            						<span class="text-uppercase"><i class="fa fa-circle deep-purple font-small-2 mr-1"></i> تعداد ارسالی</span>
+          </div>
+          <div id="line-area1" class="height-350  lineArea2 lineChart1Shadow">
+            <x-chartist #sms10 [data]="lineArea2.data" [type]="lineArea2.type" [options]="lineArea2.options"
+                        [responsiveOptions]="lineArea2.responsiveOptions" [events]="lineArea2.events">
+            </x-chartist>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

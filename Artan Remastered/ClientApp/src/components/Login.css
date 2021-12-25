@@ -1,0 +1,103 @@
+.login-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    border: 4px solid #2B7A78;
+    border-radius: 5%;
+    padding-bottom: 40px;
+}
+
+.login-icon {
+    font-size: 250%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 20px;
+}
+
+.inputs {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    padding: 10px;
+    margin-top: 30px;
+    border: 1px solid #17252A;
+}
+
+::placeholder {
+    direction: rtl;
+}
+
+.submit-btn {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    padding: 10px;
+    margin-top: 50px;
+    border: none;
+    background-color: #2B7A78;
+    color: #fff;
+    font-size: 120%;
+}
+
+.submit-btn:hover {
+    cursor: pointer;
+}
+
+.txts {
+    width: 80%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 20px;
+}
+
+.txts a:link,
+.txts a:visited,
+.txts a:hover {
+    font-size: 80%;
+    float: right;
+    text-decoration: none;
+}
+
+.clear {
+    position: absolute;
+    left: 90%;
+    top: 3%;
+}
+
+.clear:hover {
+    cursor: pointer;
+}
+
+.pass-input {
+    padding-left: 15px;
+}
+
+.pass-icon {
+    position: relative;
+    left: -73%;
+    top: 8px;
+    font-size: 120%;
+}
+
+.pass-icon:hover {
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 576px) {
+    .pass-icon {
+        left: -72%;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .login-box {
+        width: 90%;
+        height: auto;
+    }
+}

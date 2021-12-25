@@ -1,0 +1,64 @@
+.hero-full {
+    height: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/hero.jpeg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.content {
+    width: 100%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+}
+
+.hero-full .content h1 {
+    margin-bottom: 50px;
+    text-align: center;
+    color: #fff;
+    font-size: 250%;
+}
+
+.mybtn,
+mybtn:active {
+    width: 270px;
+    height: 50px;
+    color: #fff;
+    border: none;
+    font-size: 120%;
+    transition: 0.5s;
+}
+
+.mybtn:hover {
+    background-color: #3AAFA9;
+    cursor: pointer;
+}
+
+.mybtn-login {
+    background-color: #3AAFA9;
+}
+
+.mybtn-signup {
+    position: relative;
+    left: 100%;
+    transform: translateX(-100%);
+    background-color: transparent;
+    border: 3px solid #3AAFA9;
+}
+
+@media only screen and (max-width: 768px) {
+    body {
+        font-size: 15px;
+    }
+
+    .mybtn {
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-bottom: 15px;
+        width: 220px;
+    }
+
+}

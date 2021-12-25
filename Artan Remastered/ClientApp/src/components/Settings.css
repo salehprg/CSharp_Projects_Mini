@@ -1,0 +1,27 @@
+.settings-table {
+    position: relative;
+    top: 10%;
+}
+
+.settings-table th,
+.settings-table td {
+    border-collapse: collapse;
+    float: right;
+    padding: 10px 0;
+}
+
+.info-title {
+    text-align: center;
+    margin-left: 20px;
+}
+
+.info-col {
+    text-align: right;
+}
+
+.settings-table {
+    float: right;
+    width: 90%;
+    position: relative;
+    right: 5%;
+}

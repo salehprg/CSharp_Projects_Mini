@@ -1,0 +1,124 @@
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: absolute;
+    right: 0;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(/sidebar.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 999;
+}
+
+.close-box {
+    width: 100%;
+    height: 60px;
+}
+
+.hero-box {
+    width: 100%;
+    height: 80px;
+    text-align: center;
+}
+
+.hero-text {
+    text-align: center;
+}
+
+.hero-text h1 {
+    color: #fff;
+}
+
+.menu-icon {
+    display: inline;
+    float: right;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+.menu-icon:hover {
+    cursor: pointer;
+}
+
+.close-icon {
+    display: none;
+    color: #fff;
+    float: right;
+    margin-top: 15px;
+    margin-right: 15px;
+}
+
+.close-icon:hover {
+    cursor: pointer;
+}
+
+.item-box {
+    width: 100%;
+    height: 70px;
+}
+
+.item-box:hover {
+    cursor: pointer;
+}
+
+.item-icon {
+    color: #fff;
+    position: relative;
+    top: 50%;
+    left: 80%;
+    transform: translateY(-50%);
+}
+
+.item-box span {
+    color: #fff;
+    position: relative;
+    top: 25%;
+}
+
+.food-box span {
+    left: 27%;
+}
+
+.workout-box span {
+    left: 27%;
+}
+
+.settings-box span {
+    left: 39%;
+}
+
+.show-box {
+    background-color: #3AAFA9;
+}
+
+@media only screen and (max-width: 1100px) {
+    
+    .sidebar-show {
+        display: block;
+    }
+
+    .sidebar-hide {
+        display: none;
+    }
+
+    .menu-icon {
+        display: inline;
+    }
+
+    .close-icon {
+        display: block;
+    }
+
+    .food-box span {
+        left: 38%;
+    }
+
+    .workout-box span {
+        left: 38%;
+    }
+
+    .settings-box span {
+        left: 47%;
+    }
+
+}

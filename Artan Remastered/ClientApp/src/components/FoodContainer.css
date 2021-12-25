@@ -1,0 +1,71 @@
+.food-container {
+    width: calc(100vw - 250px);
+    height: 100vh;
+}
+
+.food-content {
+    width: 60%;
+    height: 80vh;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    position: relative;
+    left: 50%;
+    top: 80px;
+    transform: translateX(-50%);
+    border-radius: 10px;
+}
+
+.food-title {
+    width: 90%;
+    height: 60px;
+    background-color: #2B7A78;
+    border-radius: 3px;
+    position: relative;
+    left: 5%;
+    top: -5%;
+    direction: rtl; 
+    text-align: right;
+}
+
+.food-title span {
+    position: relative;
+    right: 10px;
+    line-height: 60px;
+    color: #fff;
+}
+
+.list {
+    height: 69vh;
+    overflow: auto;
+}
+
+.list-table th, 
+.list-table td {
+    border-collapse: collapse;
+    float: right;
+    width: 25%;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.list-table {
+    float: right;
+    width: 90%;
+    position: relative;
+    right: 5%;
+}
+
+.test {
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+@media only screen and (max-width: 1100px) {
+    
+    .food-container {
+        width: 100%;
+    }
+
+    .food-content {
+        width: 90%;
+    }
+
+}
